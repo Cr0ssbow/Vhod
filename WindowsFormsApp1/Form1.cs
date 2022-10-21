@@ -13,7 +13,7 @@ namespace WindowsFormsApp1
 {
     public partial class Form1 : MetroFramework.Forms.MetroForm
     {
-        string connStr = "server=10.90.12.110;port=33333;user=st_4_20_2;database=is_4_20_st2_KURS;password=44556988;"
+        string connStr = "server=10.90.12.110;port=33333;user=st_4_20_2;database=is_4_20_st2_KURS;password=44556988";
         MySqlConnection conn;
         static string sha256(string randomString)
         {
@@ -30,7 +30,7 @@ namespace WindowsFormsApp1
         public void GetUserInfo(string login_user)
         {
             //Объявлем переменную для запроса в БД
-            string selected_id_stud = textBox1.Text;
+            string selected_id_stud = metroTextBox1.Text;
             // устанавливаем соединение с БД
             conn.Open();
             // запрос
@@ -43,7 +43,7 @@ namespace WindowsFormsApp1
             while (reader.Read())
             {
                 // элементы массива [] - это значения столбцов из запроса SELECT
-                Auth.auth_id = reader[0].ToString();
+                Auth.Login = reader[0].ToString();
                 Auth.auth_fio = reader[1].ToString();
                 Auth.auth_role = Convert.ToInt32(reader[4].ToString());
             }
@@ -51,59 +51,91 @@ namespace WindowsFormsApp1
             // закрываем соединение с БД
             conn.Close();
         }
-        
-        //Отмена авторизации. Закрытие формы
-        private void button2_Click(object sender, EventArgs e)
+        private void metroButton2_Click(object sender, EventArgs e)
         {
             this.Close();
         }
-        public Form1()
-        {
-            InitializeComponent();
-        }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void metroButton1_Click(object sender, EventArgs e)
         {
             {
-                //Запрос в БД на предмет того, если ли строка с подходящим логином и паролем
-                string sql = "SELECT * FROM t_user WHERE loginUser = @un and  passUser= @up";
-                //Открытие соединения
-                conn.Open();
-                //Объявляем таблицу
-                DataTable table = new DataTable();
-                //Объявляем адаптер
-                MySqlDataAdapter adapter = new MySqlDataAdapter();
-                //Объявляем команду
-                MySqlCommand command = new MySqlCommand(sql, conn);
-                //Определяем параметры
-                command.Parameters.Add("@un", MySqlDbType.VarChar, 25);
-                command.Parameters.Add("@up", MySqlDbType.VarChar, 25);
-                //Присваиваем параметрам значение
-                command.Parameters["@un"].Value = textBox1.Text;
-                command.Parameters["@up"].Value = sha256(textBox2.Text);
-                //Заносим команду в адаптер
-                adapter.SelectCommand = command;
-                //Заполняем таблицу
-                adapter.Fill(table);
-                //Закрываем соединение
-                conn.Close();
-                //Если вернулась больше 0 строк, значит такой пользователь существует
-                if (table.Rows.Count > 0)
                 {
-                    //Присваеваем глобальный признак авторизации
-                    Auth.auth = true;
-                    //Достаем данные пользователя в случае успеха
-                    GetUserInfo(textBox1.Text);
-                    //Закрываем форму
-                    this.Close();
-                }
-                else
-                {
-                    //Отобразить сообщение о том, что авторизаия неуспешна
-                    MessageBox.Show("Неверные данные авторизации!");
+                    //Запрос в БД на предмет того, если ли строка с подходящим логином и паролем
+                    string sql = "SELECT * FROM t_user WHERE loginUser = @un and  passUser= @up";
+                    //Открытие соединения
+                    conn.Open();
+                    //Объявляем таблицу
+                    DataTable table = new DataTable();
+                    //Объявляем адаптер
+                    MySqlDataAdapter adapter = new MySqlDataAdapter();
+                    //Объявляем команду
+                    MySqlCommand command = new MySqlCommand(sql, conn);
+                    //Определяем параметры
+                    command.Parameters.Add("@un", MySqlDbType.VarChar, 25);
+                    command.Parameters.Add("@up", MySqlDbType.VarChar, 25);
+                    //Присваиваем параметрам значение
+                    command.Parameters["@un"].Value = metroTextBox1.Text;
+                    command.Parameters["@up"].Value = sha256(metroTextBox2.Text);
+                    //Заносим команду в адаптер
+                    adapter.SelectCommand = command;
+                    //Заполняем таблицу
+                    adapter.Fill(table);
+                    //Закрываем соединение
+                    conn.Close();
+                    //Если вернулась больше 0 строк, значит такой пользователь существует
+                    if (table.Rows.Count > 0)
+                    {
+                        //Присваеваем глобальный признак авторизации
+                        Auth.auth = true;
+                        //Достаем данные пользователя в случае успеха
+                        GetUserInfo(metroTextBox1.Text);
+                        //Закрываем форму
+                        this.Close();
+                    }
+                    else
+                    {
+                        //Отобразить сообщение о том, что авторизаия неуспешна
+                        MessageBox.Show("Неверные данные авторизации!");
+                    }
                 }
             }
 
+
+        }
+        private void Form17_auth2_Load(object sender, EventArgs e)
+        {
+            //Инициализируем соединение с подходящей строкой
+            conn = new MySqlConnection(connStr);
+        }
+
+        private void label2_Click(object sender, EventArgs e)
+        {
+            metroTextBox1.Text = label2.Text;
+        }
+
+        private void label3_Click(object sender, EventArgs e)
+        {
+            metroTextBox2.Text = label3.Text;
+        }
+
+        private void label4_Click(object sender, EventArgs e)
+        {
+            metroTextBox2.Text = label4.Text;
+        }
+
+        private void label5_Click(object sender, EventArgs e)
+        {
+            metroTextBox1.Text = label5.Text;
+        }
+
+        private void label6_Click(object sender, EventArgs e)
+        {
+            metroTextBox2.Text = label6.Text;
+        }
+
+        private void label7_Click(object sender, EventArgs e)
+        {
+            metroTextBox1.Text = label7.Text;
         }
     }
 }
