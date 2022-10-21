@@ -34,7 +34,7 @@ namespace WindowsFormsApp1
             // устанавливаем соединение с БД
             conn.Open();
             // запрос
-            string sql = $"SELECT * FROM t_user WHERE loginUser='{login_user}'";
+            string sql = $"SELECT Login FROM Data WHERE Login='{login_user}'";
             // объект для выполнения SQL-запроса
             MySqlCommand command = new MySqlCommand(sql, conn);
             // объект для чтения ответа сервера
@@ -43,7 +43,7 @@ namespace WindowsFormsApp1
             while (reader.Read())
             {
                 // элементы массива [] - это значения столбцов из запроса SELECT
-                Auth.Login = reader[0].ToString();
+                Auth.auth_id = reader[0].ToString();
                 Auth.auth_fio = reader[1].ToString();
                 Auth.auth_role = Convert.ToInt32(reader[4].ToString());
             }
@@ -51,12 +51,15 @@ namespace WindowsFormsApp1
             // закрываем соединение с БД
             conn.Close();
         }
-        private void metroButton2_Click(object sender, EventArgs e)
+        public Form1()
+        {
+            InitializeComponent();
+        }
+        private void metroButton2_Click_1(object sender, EventArgs e)
         {
             this.Close();
         }
-
-        private void metroButton1_Click(object sender, EventArgs e)
+        private void metroButton1_Click_1(object sender, EventArgs e)
         {
             {
                 {
@@ -102,7 +105,7 @@ namespace WindowsFormsApp1
 
 
         }
-        private void Form17_auth2_Load(object sender, EventArgs e)
+        private void Form2_Load(object sender, EventArgs e)
         {
             //Инициализируем соединение с подходящей строкой
             conn = new MySqlConnection(connStr);
@@ -137,5 +140,7 @@ namespace WindowsFormsApp1
         {
             metroTextBox1.Text = label7.Text;
         }
+
+
     }
 }
