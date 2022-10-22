@@ -64,7 +64,7 @@ namespace WindowsFormsApp1
             {
                 {
                     //Запрос в БД на предмет того, если ли строка с подходящим логином и паролем
-                    string sql = "SELECT * FROM t_user WHERE loginUser = @un and  passUser= @up";
+                    string sql = "SELECT Login FROM Data WHERE Login = @un and  Password= @up";
                     //Открытие соединения
                     conn.Open();
                     //Объявляем таблицу
@@ -98,7 +98,7 @@ namespace WindowsFormsApp1
                     else
                     {
                         //Отобразить сообщение о том, что авторизаия неуспешна
-                        MessageBox.Show("Неверные данные авторизации!");
+                        MessageBox.Show("Неверные данные или обратитесь к системному администратору");
                     }
                 }
             }

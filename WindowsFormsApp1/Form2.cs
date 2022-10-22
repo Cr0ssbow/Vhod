@@ -72,7 +72,7 @@ namespace WindowsFormsApp1
                     //Вытаскиваем из класса поля в label'ы
                     label5.Text = Auth.auth_id;
                     label4.Text = Auth.auth_fio;
-                    label6.Text = "Успешна!";
+                    label6.Text = "Вы успешно зашли в систему";
                     //Красим текст в label в зелёный цвет
                     label6.ForeColor = Color.Green;
                     //Вызываем метод управления ролями
