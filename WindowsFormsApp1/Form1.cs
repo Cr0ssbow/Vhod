@@ -64,7 +64,7 @@ namespace WindowsFormsApp1
             {
                 {
                     //Запрос в БД на предмет того, если ли строка с подходящим логином и паролем
-                    string sql = "SELECT Login FROM Data WHERE Login = @un and  Password= @up";
+                    string sql = "SELECT Login, Password FROM Data WHERE Login = @un and  Password= @up";
                     //Открытие соединения
                     conn.Open();
                     //Объявляем таблицу
@@ -110,37 +110,6 @@ namespace WindowsFormsApp1
             //Инициализируем соединение с подходящей строкой
             conn = new MySqlConnection(connStr);
         }
-
-        private void label2_Click(object sender, EventArgs e)
-        {
-            metroTextBox1.Text = label2.Text;
-        }
-
-        private void label3_Click(object sender, EventArgs e)
-        {
-            metroTextBox2.Text = label3.Text;
-        }
-
-        private void label4_Click(object sender, EventArgs e)
-        {
-            metroTextBox2.Text = label4.Text;
-        }
-
-        private void label5_Click(object sender, EventArgs e)
-        {
-            metroTextBox1.Text = label5.Text;
-        }
-
-        private void label6_Click(object sender, EventArgs e)
-        {
-            metroTextBox2.Text = label6.Text;
-        }
-
-        private void label7_Click(object sender, EventArgs e)
-        {
-            metroTextBox1.Text = label7.Text;
-        }
-
 
     }
 }
